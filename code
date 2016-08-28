@@ -1,0 +1,40 @@
+<div id="a">
+    <div id="b"></div>
+</div>
+#a{
+    width:20px;
+    height:200px;
+    background-color:#aaa;
+    position:relative;
+}
+#b{
+    width:100%;
+    height:15%;
+    background-color:palevioletred;
+    position:absolute;
+    top:0px;
+}
+$(document).ready(function(){
+    let axiL = 0,
+        doc = $(document),
+        b = $("#b");
+
+    //定义鼠标拖动时执行的函数                    
+    function move(event){
+        const top = parseInt(b.css("top"));
+        let axiN = top + event.pageY - axiL;
+        axiN = (axiN < 0) ? 0: axiN;
+        axiN = (axiN > 170) ? 170: axiN;
+        b.css("top", axiN);
+        axiL = event.pageY;
+    }
+
+    b.on("mousedown", function() {
+        doc.on("mousemove", move);
+        axiL = event.pageY;
+    });
+    doc.on("mouseup", function() {
+        doc.off("mousemove", move);
+    });
+});
+                
